@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sovereign AI Governance Platform - Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff; /* Lackweiß */
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .header {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .clock-container {
+            font-size: 1.2em;
+            margin-top: 10px;
+        }
+        .container {
+            background-color: #f0f0f0;
+            border-radius: 8px;
+            padding: 20px;
+            width: 90%;
+            max-width: 800px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .button {
+            background-color: #c0c0c0; /* Chrome Silber */
+            border: none;
+            color: black;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .button:hover {
+            background-color: #a9a9a9; /* Dunkleres Silber */
+        }        .status-box {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #fafafa;
+        }
+        .log-entry {
+            margin: 5px 0;
+            font-family: monospace;
+        }
+        .footer {
+            margin-top: 30px;
+            font-size: 0.8em;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>Sovereign AI Governance Platform - Demo</h1>
+    <div class="clock-container" id="clock">--:--:--</div>
+    <div class="footer">°KaVa090526</div>
+</div>
+
+<div class="container">
+    <h2>Simulationsbereich</h2>
+    <p>Diese Demo simuliert grundlegende Interaktionen.</p>
+
+    <label for="userInput">Benutzereingabe:</label><br>
+    <textarea id="userInput" rows="4" cols="50" placeholder="Geben Sie eine Anfrage ein..."></textarea><br><br>
+
+    <button class="button" onclick="simulateRequest()">Anfrage senden</button>
+    <button class="button" onclick="simulateAIExecution()">KI-Ausführung simulieren</button>
+    <button class="button" onclick="simulateAudit()">Audit-Eintrag simulieren</button>
+    <button class="button" onclick="resetDemo()">Zurücksetzen</button>
+
+    <div class="status-box">
+        <h3>Status</h3>
+        <div id="statusDisplay">Bereit.</div>
+    </div>
+
+    <div class="status-box">
+        <h3>Simulations-Log</h3>
+        <div id="logDisplay"></div>
+    </div>
+</div>
+
+<script>    let logEntries = [];
+    const maxLogEntries = 10;
+
+    function updateClock() {
+        const now = new Date();
+        document.getElementById('clock').textContent = now.toLocaleString();
+    }
+
+    setInterval(updateClock, 1000);
+    updateClock(); // Initial aufrufen
+
+    function addLogEntry(message) {
+        const entry = document.createElement('div');
+        entry.className = 'log-entry';
+        entry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+        logEntries.push(entry.textContent);
+
+        if (logEntries.length > maxLogEntries) {
+            logEntries.shift();
+        }
+
+        const logDisplay = document.getElementById('logDisplay');
+        logDisplay.innerHTML = '';
+        logEntries.forEach(logText => {
+            const logDiv = document.createElement('div');
+            logDiv.textContent = logText;
+            logDisplay.appendChild(logDiv);
+        });
+    }
+
+    function simulateRequest() {
+        const input = document.getElementById('userInput').value.trim();
+        if (!input) {
+            alert('Bitte geben Sie eine Anfrage ein.');
+            return;
+        }
+        document.getElementById('statusDisplay').textContent = 'Anfrage wird verarbeitet...';
+        addLogEntry(`Anfrage gestellt: "${input}"`);
+        setTimeout(() => {
+            document.getElementById('statusDisplay').textContent = 'Anfrage verarbeitet.';
+            addLogEntry('Anfrage erfolgreich verarbeitet.');
+        }, 1500);
+    }
+
+    function simulateAIExecution() {
+        document.getElementById('statusDisplay').textContent = 'KI-Ausführung läuft...';
+        addLogEntry('KI-Ausführung simuliert.');
+        setTimeout(() => {
+            document.getElementById('statusDisplay').textContent = 'KI-Ausführung abgeschlossen.';
+            addLogEntry('KI-Antwort erhalten: Dies ist eine simulierte KI-Antwort.');        }, 2000);
+    }
+
+    function simulateAudit() {
+        addLogEntry('Audit-Eintrag hinzugefügt.');
+        document.getElementById('statusDisplay').textContent = 'Audit-Eintrag protokolliert.';
+    }
+
+    function resetDemo() {
+        document.getElementById('userInput').value = '';
+        document.getElementById('statusDisplay').textContent = 'Zurückgesetzt.';
+        logEntries = [];
+        document.getElementById('logDisplay').innerHTML = '';
+        addLogEntry('Demo zurückgesetzt.');
+    }
+
+    // Füge die Kennzeichnung in den JS-Code ein
+    console.log("°KaVa090526 - JS Initialisiert");
+</script>
+
+</body>
+</html>
